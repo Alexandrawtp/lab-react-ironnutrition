@@ -1,15 +1,45 @@
 import React, { Component } from 'react';
 import foodsJson from '../foods.json';
+import AddFood from './AddFood';
 
 class FoodBox extends Component {
   state = {
     foods: foodsJson,
+    showForm: false,
+  };
+
+  addForm() {}
+
+  handleAddFood = (event) => {
+    event.preventDefault();
+    let name = event.target.name.value;
+    let calories = event.target.calories.value;
+    let newItem = {
+      name,
+      calories,
+    };
+    this.setState({
+      showForm: false,
+      foods: [newItem, ...this.state.foods]
+    });
+  };
+
+  handleShowForm = () => {
+    this.setState({
+      showForm: true,
+    });
   };
 
   render() {
+    const {showForm, foods} = this.state;
     return (
       <>
-        {this.state.foods.map((singleFood, index) => (
+        {showForm ? (
+          <AddFood onAdd={this.handleAddFood} />
+        ) : (
+          <button onClick={this.handleShowForm}>Add an item</button>
+        )}
+        {foods.map((singleFood, index) => (
           <div key={index} className="box">
             <article className="media">
               <div className="media-left">
