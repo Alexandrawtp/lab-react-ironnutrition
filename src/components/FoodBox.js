@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import foodsJson from '../foods.json';
 import AddFood from './AddFood';
+import SearchBar from './SearchBar';
 
 class FoodBox extends Component {
   state = {
     foods: foodsJson,
     showForm: false,
+    filteredItems: []
   };
-
-  addForm() {}
 
   handleAddFood = (event) => {
     event.preventDefault();
@@ -30,16 +30,29 @@ class FoodBox extends Component {
     });
   };
 
+  handleChange = (event) => {
+    console.log(event.target.value);
+    let searchText = event.target.value.toLowerCase();
+    let filteredList = this.state.foods.filter((singleFood) => {
+      return singleFood.name.toLowerCase().includes(searchText)
+    })
+    this.setState({
+      filteredItems: filteredList
+    })
+    console.log(this.state.filteredItems)
+  }
+
   render() {
-    const {showForm, foods} = this.state;
+    const {showForm, filteredItems} = this.state;
     return (
       <>
+        <SearchBar setChange={this.handleChange}/>
         {showForm ? (
           <AddFood onAdd={this.handleAddFood} />
         ) : (
           <button onClick={this.handleShowForm}>Add an item</button>
         )}
-        {foods.map((singleFood, index) => (
+        {filteredItems.map((singleFood, index) => (
           <div key={index} className="box">
             <article className="media">
               <div className="media-left">
