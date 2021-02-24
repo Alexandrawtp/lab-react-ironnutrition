@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 class FoodBox extends Component {
   state = {
     foods: foodsJson,
+    quantity: 1,
     showForm: false,
     filteredItems: []
   };
@@ -31,7 +32,6 @@ class FoodBox extends Component {
   };
 
   handleChange = (event) => {
-    console.log(event.target.value);
     let searchText = event.target.value.toLowerCase();
     let filteredList = this.state.foods.filter((singleFood) => {
       return singleFood.name.toLowerCase().includes(searchText)
@@ -39,11 +39,16 @@ class FoodBox extends Component {
     this.setState({
       filteredItems: filteredList
     })
-    console.log(this.state.filteredItems)
+  }
+
+  handleQuantity = (event) => {
+    this.setState({
+      quantity: event.target.value
+    })
   }
 
   render() {
-    const {showForm, filteredItems} = this.state;
+    const {showForm, filteredItems, quantity} = this.state;
     return (
       <>
         <SearchBar setChange={this.handleChange}/>
@@ -69,10 +74,10 @@ class FoodBox extends Component {
               <div className="media-right">
                 <div className="field has-addons">
                   <div className="control">
-                    <input className="input" type="number" value="1" />
+                    <input onChange={this.handleQuantity} className="input" type="number" />
                   </div>
                   <div className="control">
-                    <button className="button is-info">+</button>
+                    <button onClick={() => {this.props.onFoodAdd(singleFood, quantity)}} className="button is-info">+</button>
                   </div>
                 </div>
               </div>
