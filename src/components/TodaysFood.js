@@ -3,9 +3,7 @@ import React, {Component} from 'react';
 class TodaysFood extends Component {
 
   render() {
-    let total = 0;
     const {items} = this.props;
-    console.log('items total:',items);
 
     return(
       <div>

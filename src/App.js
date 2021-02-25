@@ -11,8 +11,6 @@ class App extends Component {
   }
 
   handleAddItem = (mySingleFood, myQuantity) => {
-    console.log('a:',mySingleFood);
-    console.log('b:',myQuantity);
 
     let newItem = {
       name: mySingleFood.name,
@@ -20,12 +18,9 @@ class App extends Component {
       quantity: myQuantity
     }
 
-    console.log('new item', newItem)
-
     this.setState({
       todaysFood: [...this.state.todaysFood, newItem]
     })
-    console.log('today food', this.state.todaysFood)
   }
 
 
